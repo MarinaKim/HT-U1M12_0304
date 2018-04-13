@@ -7,6 +7,7 @@
 #include<time.h>
 
 using namespace std;
+
 void main()
 {
 	srand(time(NULL));
@@ -351,11 +352,115 @@ void main()
 
 			/*6.	Имеется файл, элементами которого являются отдельные буквы. Получить слово, образованное этими буквами*/
 		case 6: {
+
+			if ((fp = fopen("case6.txt", "w")) != NULL)
+			{
+				char*str = "e l l o h";
+				fprintf(fp, "%s", str);
+				printf("набор букв, который присутвует в файле: %s\n", str);
+			}
+			fclose(fp);
+
+			if ((fp = fopen("case6.txt", "w")) == NULL)
+			{
+				int a;
+				char newStr[20] = " ";
+				char word[10] = "hello";
+				printf("вы знаете что это за слово?1/0");
+				scanf("%d", &a);
+				switch (a)
+				{
+				case 1:
+				{
+					printf("напишите его: ");
+					scanf("%s", newStr);
+
+					int i = 0;
+					while (i != 4)
+					{
+						if (word[i] == newStr[i])
+							i++;
+					}
+					if (i == 4)
+					{
+						printf("Вы угадали!\nхотите записать это в файл?1/0");
+						a = 0;
+						scanf("%d", &a);
+						switch (a)
+						{
+						case 1:
+						{
+							fprintf(fp, "%s", newStr);
+							printf("файл успешно записан\n");
+						}break;
+						case 0:
+						{
+							printf("файл не будет перезаписываться");
+						}break;
+						}
+					}
+				}break;
+
+				case 0:
+				{
+					printf("переходим к следующему заданию\n");
+				}break;
+				}
+			}
+			fclose(fp);
 		} break;
 
 			/*7.	Имеется типизированный файл, элементами которого являются отдельные слова. Напечатать все слова,
 			начинающиеся на букву с.*/
 		case 7: {
+
+			int dl;
+			if ((fp = fopen("case7.txt", "w")) == NULL)
+			{
+				printf("error\n");
+				exit(1);
+			}
+			else
+			{
+				char *str = "calling no cardinal mother channel ";
+				fprintf(fp, "%s", str);
+				printf("набор слов в данном файле:\n%s\n", str);
+				dl = strlen(str);
+			}
+			fclose(fp);
+
+			if ((fp = fopen("case7.txt", "r")) != NULL)
+			{
+				char mas[50];
+				for (int i = 0; i < dl; i++)
+				{
+					mas[i] = getc(fp);
+					if (i == 0 && mas[i] == 'c')
+					{
+						int j = i;
+						do {
+							printf("%c", mas[j]);
+							j++;
+							mas[j] = getc(fp);
+						} while (mas[j] != ' ');
+						printf("\n");
+						i = j;
+					}
+
+					else if (mas[i] == 'c'&&mas[i - 1] == ' ')
+					{
+						int k = i;
+						do {
+							printf("%c", mas[k]);
+							k++;
+							mas[k] = getc(fp);
+						} while (mas[k] != ' '&&k != dl);
+						printf("\n");
+						i = k;
+					}
+				}
+			}
+			fclose(fp);
 		} break;
 
 			/*8.	Имеется типизированный файл, в котором записаны 18 целых чисел. Переписать все положительные
