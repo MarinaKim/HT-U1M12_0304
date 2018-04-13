@@ -293,7 +293,7 @@ void main()
 					fscanf(fp, "%d", &mas[i]);
 					/*printf("%d\t", mas[i]);*/
 				}
-				if (((fp1 = fopen("case4_h_1.txt", "w")) != NULL) && ((fp2 = fopen("case4_hh_1.txt", "w")) != NULL))
+				if (((fp1 = fopen("case4_h_3.txt", "w")) != NULL) && ((fp2 = fopen("case4_hh_3.txt", "w")) != NULL))
 				{
 					printf("‘айлы открыты\n");
 					for (int i = 0; i < 12; i++)
@@ -307,24 +307,35 @@ void main()
 					fclose(fp2);
 
 					// открываем два доп файла и сортиру€, записываем в массив в нужном виде
-					if (((fp1 = fopen("case4_h_1.txt", "r")) != NULL) && ((fp2 = fopen("case4_hh_1.txt", "r")) != NULL))
+					if (((fp1 = fopen("case4_h_3.txt", "r")) != NULL) && ((fp2 = fopen("case4_hh_3.txt", "r")) != NULL))
 					{
 						printf("‘айлы открыты\n");
 
-						for (int i = 0; i < 12; i = i + 2)
+						for (int i = 0; i < 12; i++)
 						{
+
 							if (i % 4 <= 1)
 							{
-								fscanf(fp1, "%d\t", mas[i]);
+								fscanf(fp1, "%d", &mas[i]);
 								printf("%d\t", mas[i]);
 							}
 							else
 							{
-								fscanf(fp2, "%d\t", mas[i]);
+								fscanf(fp2, "%d", &mas[i]);
 								printf("%d\t", mas[i]);
 							}
 						}
-					}fclose(fp1);
+					}
+					fclose(fp1);
+					fclose(fp2);
+
+					if (((fp2 = fopen("case4_hh_3.txt", "w+")) != NULL))
+					{
+						for (int i = 0; i < 10; i++)
+						{
+							fprintf(fp2, "%d\t", mas[i]);
+						}
+					}
 					fclose(fp2);
 				}
 			}
