@@ -76,11 +76,11 @@ void main()
 		} break;
 			/*3.	Дан символьный файл f. Записать в файл g ком¬поненты файла f в обратном порядке*/
 		case 3: {
-			
-			char mas[] = "Дан символьный файл f.";
-			int countChar=strlen(mas);
+
+			char *mas = "Дан символьный файл f.";
+			int countChar = strlen(mas);
 			printf("Количество символов в файле: %d\n", countChar);
-			
+
 			if ((fp = fopen("case3.txt", "w")) != NULL)
 			{
 				for (int i = 0; i < countChar; i++)
@@ -91,7 +91,7 @@ void main()
 			if ((fp = fopen("case3.txt", "r")) != NULL)
 			{
 				printf("Файл открыт\n");
-				
+
 				for (int i = 0; i < countChar; i++)
 				{
 					fscanf(fp, "%c", &mas[i]);
@@ -100,7 +100,7 @@ void main()
 
 				if ((fp1 = fopen("case3_new.txt", "w")) != NULL)
 				{
-					for (int i = countChar-1; i >= 0; i--)
+					for (int i = countChar - 1; i >= 0; i--)
 						fprintf(fp1, "%c", mas[i]);
 				}
 				fclose(fp1);
@@ -353,12 +353,59 @@ void main()
 	b.	размер существующего файла неизвестен
 	*/
 		case 5: {
+			char *mas = "Напечатать все элементы типизированного файла каждый элемент которого отдельное слово рассмотреть два.";
+			if ((fp = fopen("case5.txt", "w")) != NULL)
+			{
+				/**/
+				fprintf(fp, "%s", mas);
+			}
+			else
+			{
+				printf("error\n");
+				EXIT_FAILURE;
+			}
+			fclose(fp);
+			char mas_s[12][20];
+			if ((fp = fopen("case5.txt", "r")) != NULL)
+			{
+				for (int i = 0; i < 12; i++)
+				{
+					fscanf(fp, "%s", &mas_s[i]);
+					/*printf("%s\n", mas_s[i]);*/
+				}
+			}
+			else
+			{
+				printf("error\n");
+				EXIT_FAILURE;
+			}
+			fclose(fp);
+
+			if ((fp1 = fopen("case5_new.txt", "w")) != NULL)
+			{
+				for (int i = 0; i < 12; i++)
+				{
+					fprintf(fp1, "%s\n", mas_s[i]);
+				}
+			}
+			else
+			{
+				printf("error\n");
+				EXIT_FAILURE;
+			}
+			fclose(fp1);
+
 		} break;
 
 			/*6.	Имеется файл, элементами которого являются отдельные буквы. Получить слово, образованное этими буквами*/
 		case 6: {
 
-			if ((fp = fopen("case6.txt", "w")) != NULL)
+			if ((fp = fopen("case6.txt", "w")) == NULL)
+			{
+				printf("error\n");
+				exit(1);
+			}
+			else
 			{
 				char*str = "e l l o h";
 				fprintf(fp, "%s", str);
@@ -366,36 +413,46 @@ void main()
 			}
 			fclose(fp);
 
+
 			if ((fp = fopen("case6.txt", "w")) == NULL)
 			{
+				printf("error\n");
+				exit(1);
+			}
+			else
+			{
 				int a;
-				char newStr[20] = " ";
+				char str1[20] = " ";
 				char word[10] = "hello";
-				printf("вы знаете что это за слово?1/0");
+				printf("вы знаете слово?1/0");
 				scanf("%d", &a);
 				switch (a)
 				{
 				case 1:
 				{
-					printf("напишите его: ");
-					scanf("%s", newStr);
+					printf("введите слово: ");
+					scanf("%s", str1);
 
 					int i = 0;
 					while (i != 4)
 					{
-						if (word[i] == newStr[i])
+						if (word[i] == str1[i])
 							i++;
+						else
+						{
+							printf("не правильно\n"); break;
+						}
 					}
 					if (i == 4)
 					{
-						printf("Вы угадали!\nхотите записать это в файл?1/0");
+						printf("Правильно!\nЗаписать в файл?1/0");
 						a = 0;
 						scanf("%d", &a);
 						switch (a)
 						{
 						case 1:
 						{
-							fprintf(fp, "%s", newStr);
+							fprintf(fp, "%s", str1);
 							printf("файл успешно записан\n");
 						}break;
 						case 0:
@@ -413,7 +470,8 @@ void main()
 				}
 			}
 			fclose(fp);
-		} break;
+
+		}break;
 
 			/*7.	Имеется типизированный файл, элементами которого являются отдельные слова. Напечатать все слова,
 			начинающиеся на букву с.*/
