@@ -76,36 +76,41 @@ void main()
 		} break;
 			/*3.	Дан символьный файл f. Записать в файл g ком¬поненты файла f в обратном порядке*/
 		case 3: {
-			int mas[10];
-			for (int i = 0; i < 10; i++)
-			{
-				mas[i] = 5 + rand() % 20;
-				printf("%d\t", mas[i]);
-			}
-			printf("\n");
-
+			
+			char mas[] = "Дан символьный файл f.";
+			int countChar=strlen(mas);
+			printf("Количество символов в файле: %d\n", countChar);
+			
 			if ((fp = fopen("case3.txt", "w")) != NULL)
 			{
-				for (int i = 0; i < 10; i++)
-					fprintf(fp, "%d\t", mas[i]);
+				for (int i = 0; i < countChar; i++)
+					fprintf(fp, "%c", mas[i]);
 			}
 			fclose(fp);
 
 			if ((fp = fopen("case3.txt", "r")) != NULL)
 			{
-				for (int i = 0; i < 10; i++)
+				printf("Файл открыт\n");
+				
+				for (int i = 0; i < countChar; i++)
 				{
-					fscanf(fp, "%d", &mas[i]);
+					fscanf(fp, "%c", &mas[i]);
 					/*printf("%d\t", mas[i]);*/
 				}
 
 				if ((fp1 = fopen("case3_new.txt", "w")) != NULL)
 				{
-					for (int i = 9; i >= 0; i--)
-						fprintf(fp1, "%d\t", mas[i]);
+					for (int i = countChar-1; i >= 0; i--)
+						fprintf(fp1, "%c", mas[i]);
 				}
 				fclose(fp1);
 			}
+			else
+			{
+				printf("error\n");
+				EXIT_FAILURE;
+			}
+
 			fclose(fp);
 		} break;
 
@@ -529,6 +534,37 @@ b.	последнее слово
 
 			/*13.	Имеется файл с тридцатью числами. Записать в другой файл числа имеющегося файла в обратном порядке.*/
 		case 13: {
+			int mas[10];
+			for (int i = 0; i < 30; i++)
+			{
+				mas[i] = 5 + rand() % 20;
+				printf("%d\t", mas[i]);
+			}
+			printf("\n");
+
+			if ((fp = fopen("case13.txt", "w")) != NULL)
+			{
+				for (int i = 0; i < 30; i++)
+					fprintf(fp, "%d\t", mas[i]);
+			}
+			fclose(fp);
+
+			if ((fp = fopen("case13.txt", "r")) != NULL)
+			{
+				for (int i = 0; i < 30; i++)
+				{
+					fscanf(fp, "%d", &mas[i]);
+					/*printf("%d\t", mas[i]);*/
+				}
+
+				if ((fp1 = fopen("case13_new.txt", "w")) != NULL)
+				{
+					for (int i = 29; i >= 0; i--)
+						fprintf(fp1, "%d\t", mas[i]);
+				}
+				fclose(fp1);
+			}
+			fclose(fp);
 		} break;
 		}
 	} while (n > 0);
