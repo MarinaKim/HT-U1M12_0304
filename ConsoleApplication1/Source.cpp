@@ -466,6 +466,42 @@ void main()
 			/*8.	Имеется типизированный файл, в котором записаны 18 целых чисел. Переписать все положительные
 			числа файла в массив в том же порядк*/
 		case 8: {
+			int mas[10];
+			for (int i = 0; i < 18; i++)
+			{
+				mas[i] = -10 + rand() % 20;
+				printf("%d\t", mas[i]);
+			}
+			printf("\n");
+
+			if ((fp = fopen("case8.txt", "w")) != NULL)
+			{
+				for (int i = 0; i < 18; i++)
+					fprintf(fp, "%d\t", mas[i]);
+			}
+			fclose(fp);
+
+			if ((fp = fopen("case8.txt", "r")) != NULL)
+			{
+				for (int i = 0; i < 18; i++)
+				{
+					fscanf(fp, "%d", &mas[i]);
+					/*printf("%d\t", mas[i]);*/
+				}
+
+				if ((fp1 = fopen("case8_new.txt", "w")) != NULL)
+				{
+					for (int i = 0; i < 18; i++)
+					{
+						if (mas[i] > 0)
+						{
+							fprintf(fp1, "%d\t", mas[i]);
+						}
+					}
+				}
+				fclose(fp1);
+			}
+			fclose(fp);
 		} break;
 
 			/*9.	В существующем типизированном файле, элементами которого являются отдельные слова, изменить
