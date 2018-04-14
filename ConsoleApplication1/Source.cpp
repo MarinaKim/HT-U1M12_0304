@@ -365,6 +365,7 @@ void main()
 				EXIT_FAILURE;
 			}
 			fclose(fp);
+
 			char mas_s[12][20];
 			if ((fp = fopen("case5.txt", "r")) != NULL)
 			{
@@ -583,11 +584,132 @@ b.	последнее слово
 			/*11.	Имеется типизированный файл, элементами которого являются отдельные буквы, составляющие
 			последовательность орпцессор. Получить новый файл, в котором буквы слова процессор будут расположены правильно*/
 		case 11: {
+			if ((fp = fopen("case11.txt", "w")) == NULL)
+			{
+				printf("error\n");
+				exit(1);
+			}
+			else
+			{
+				char*str = "orpcessor";
+				fprintf(fp, "%s", str);
+				printf("набор букв, который присутвует в файле: %s\n", str);
+			}
+			fclose(fp);
+
+
+			if ((fp = fopen("case11.txt", "w")) == NULL)
+			{
+				printf("error\n");
+				exit(1);
+			}
+			else
+			{
+				int a;
+				char str1[20] = " ";
+				char word[15] = "processor";
+				printf("вы знаете слово?1/0");
+				scanf("%d", &a);
+				switch (a)
+				{
+				case 1:
+				{
+					printf("введите слово: ");
+					scanf("%s", str1);
+
+					int i = 0;
+					while (i != 9)
+					{
+						if (word[i] == str1[i])
+							i++;
+						else
+						{
+							printf("не правильно\n"); break;
+						}
+					}
+					if (i == 9)
+					{
+						printf("Правильно!\nЗаписать в файл?1/0");
+						a = 0;
+						scanf("%d", &a);
+						switch (a)
+						{
+						case 1:
+						{
+							fprintf(fp, "%s", str1);
+							printf("файл записан\n");
+						}break;
+						case 0:
+						{
+							printf("файл не будет перезаписываться");
+						}break;
+						}
+					}
+				}break;
+
+				case 0:
+				{
+					printf("переходим к следующему заданию\n");
+				}break;
+				}
+			}
+			fclose(fp);
 		} break;
 
 			/*12.	Имеется файл, элементами которого являются отдельные слова. Переписать их в другой файл.
 			Размер заданного файла неизвестен.*/
 		case 12: {
+			char *mas = "Если вы копирайтер, поэт, писатель, студент, школьник, пишущий реферат, либо желаете улучшить свою речь, то этот сайт обязательно поможет вам. С помощью нашего онлайн словаря синонимов русского языка можно легко найти слова с похожим смыслом.";
+			int count = 0;
+			for (int i = 0; i < strlen(mas); i++)
+			{
+				if (mas[i] == ' ')
+				{
+					count++;
+				}
+			}
+			printf("Количество слов в массиве: %d\n", count + 1);
+
+			if ((fp = fopen("case12.txt", "w")) != NULL)
+			{
+				fprintf(fp, "%s", mas);
+			}
+			else
+			{
+				printf("error\n");
+				EXIT_FAILURE;
+			}
+			fclose(fp);
+
+			char *mas_s[35][20];
+			if ((fp = fopen("case12.txt", "r")) != NULL)
+			{
+				for (int i = 0; i < count; i++)
+				{
+					fscanf(fp, "%s", &mas_s[i]);
+					printf("%s\n", mas_s[i]);
+				}
+			}
+			else
+			{
+				printf("error\n");
+				EXIT_FAILURE;
+			}
+			fclose(fp);
+
+			if ((fp1 = fopen("case12_new.txt", "w")) != NULL)
+			{
+				for (int i = 0; i < count; i++)
+				{
+					fprintf(fp1, "%s\n", mas_s[i]);
+				}
+			}
+			else
+			{
+				printf("error\n");
+				EXIT_FAILURE;
+			}
+			fclose(fp1);
 		} break;
 
 			/*13.	Имеется файл с тридцатью числами. Записать в другой файл числа имеющегося файла в обратном порядке.*/
